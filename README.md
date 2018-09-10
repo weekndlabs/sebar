@@ -62,7 +62,7 @@ sebar deploys applications following the Capistrano flow.
 * Symlink phase: After deploying the new release into your hosts, this step changes the `current` softlink to new the release
 * Cleanup phase: Removes any old version based in the `sebar_keep_releases` parameter (see "Role Variables")
 
-![sebar Flow](https://raw.githubusercontent.com/sebar/deploy/master/docs/sebar-flow.png)
+![sebar Flow](https://raw.githubusercontent.com/weekndlabs/sebar/master/docs/sebar-flow.png)
 
 Role Variables
 --------------
