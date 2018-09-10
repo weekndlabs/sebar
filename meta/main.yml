@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: sebar
-  description: Ansible role to deploy scripting applications like PHP, Python, Ruby, etc. in a Capistrano style
+  description: Ansible roles to easily manage the deployment process for scripting applications such as Nodejs, Golang, PHP, Python and Ruby etc.
   company: SEBAR
   license: MIT
   min_ansible_version: 2.3
@@ -39,7 +39,7 @@ galaxy_info:
   - name: Debian
     versions:
     - all
-galaxy_tags:
+  categories:
   - cloud
   - web
   - deploy
