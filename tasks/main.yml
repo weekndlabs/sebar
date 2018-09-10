@@ -1,0 +1,36 @@
+---
+- include: "{{ sebar_before_setup_tasks_file | default('empty.yml') }}"
+
+- include: setup.yml
+
+- include: "{{ sebar_after_setup_tasks_file | default('empty.yml') }}"
+
+- include: "{{ sebar_before_update_code_tasks_file | default('empty.yml') }}"
+
+- include: update-code.yml
+
+- include: "{{ sebar_after_update_code_tasks_file | default('empty.yml') }}"
+
+- include: "{{ sebar_before_symlink_shared_tasks_file | default('empty.yml') }}"
+
+- include: symlink-shared.yml
+
+- include: "{{ sebar_after_symlink_shared_tasks_file | default('empty.yml') }}"
+
+- include: "{{ sebar_before_symlink_tasks_file | default('empty.yml') }}"
+
+- include: symlink.yml
+  when: sebar_current_via == "symlink"
+
+- include: rsync-deploy.yml
+  when: sebar_current_via == "rsync"
+
+- include: "{{ sebar_after_symlink_tasks_file | default('empty.yml') }}"
+
+- include: "{{ sebar_before_cleanup_tasks_file | default('empty.yml') }}"
+
+- include: cleanup.yml
+
+- include: "{{ sebar_after_cleanup_tasks_file | default('empty.yml') }}"
+
+- include: anon-stats.yml

@@ -1,0 +1,30 @@
+---
+- name: sebar | Ensure shared path 1 exists
+  file:
+    state: directory
+    path: "{{ sebar_deploy_to }}/shared/blah"
+
+- name: sebar | Ensure shared path 2 exists
+  file:
+    state: directory
+    path: "{{ sebar_deploy_to }}/shared/foo/bar"
+
+- name: sebar | Ensure shared path 3 exists
+  file:
+    state: directory
+    path: "{{ sebar_deploy_to }}/shared/xxx/yyy/zzz"
+
+- name: sebar | Ensure shared file 1 exists
+  file:
+    state: touch
+    path: "{{ sebar_deploy_to }}/shared/test.txt"
+
+- name: sebar | Ensure shared files folder exists
+  file:
+    state: directory
+    path: "{{ sebar_deploy_to }}/shared/files"
+
+- name: sebar | Ensure shared file 2 exists
+  file:
+    state: touch
+    path: "{{ sebar_deploy_to }}/shared/files/test.txt"

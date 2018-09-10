@@ -1,0 +1,19 @@
+---
+
+# Migration check from rsync deployment
+- stat:
+    path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
+  register: stat_current_dir
+
+- name: sebar | Remove current folder if it's a directory
+  file:
+    state: absent
+    path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
+  when: stat_current_dir.stat.isdir is defined and stat_current_dir.stat.isdir
+
+# Performs symlink exchange
+- name: sebar | Change softlink to new release
+  file:
+    state: link
+    path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
+    src: "./{{ sebar_version_dir }}/{{ sebar_release_version }}"

@@ -1,0 +1,13 @@
+---
+- name: sebar | download | Create release folder
+  file:
+    state: directory
+    path: "{{ sebar_release_path.stdout }}"
+
+# We should be able to remove default(omit) filters and add defaults once we deprecate Ansible 1.9
+- name: sebar | download | Download artifact
+  get_url:
+    url: "{{ sebar_get_url }}"
+    dest: "{{ sebar_release_path.stdout }}/{{ sebar_get_url | basename }}"
+    force_basic_auth: "{{ sebar_download_force_basic_auth | default(omit) }}"
+    headers: "{{ sebar_download_headers | default(omit) }}"

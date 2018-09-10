@@ -1,0 +1,40 @@
+---
+
+# Migration check from symlink deployment
+- stat:
+    path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
+  register: stat_current_dir
+
+- name: sebar | Remove current folder if it's a symlink
+  file:
+    state: absent
+    path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
+  when: stat_current_dir.stat.islnk is defined and stat_current_dir.stat.islnk
+
+# Perform rsync deployment
+- name: sebar | Ensure current folder is a directory
+  file:
+    state: directory
+    path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
+
+- name: sebar | Sync release to new current path
+  command: rsync -a -F --no-times --delete-after "{{ sebar_release_path.stdout }}/" "{{ sebar_deploy_to }}/{{ sebar_current_dir }}/"
+
+# Ensure symlinks target paths is absent
+- name: sebar | Ensure shared paths targets are absent
+  file:
+    state: absent
+    path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}/{{ item }}"
+  with_flattened:
+    - "{{ sebar_shared_paths }}"
+    - "{{ sebar_shared_files }}"
+
+# Symlinks shared paths
+- name: sebar | Create softlinks for shared paths
+  file:
+    state: link
+    path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}/{{ item }}"
+    src: "{{ item | regex_replace('[^\\/]*', '..') }}/shared/{{ item }}"
+  with_flattened:
+    - "{{ sebar_shared_paths }}"
+    - "{{ sebar_shared_files }}"

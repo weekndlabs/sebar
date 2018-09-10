@@ -1,0 +1,5 @@
+---
+# Clean up releases
+- name: sebar | Clean up releases
+  shell: ls -1dt {{ sebar_releases_path }}/* | tail -n +{{ sebar_keep_releases | int + 1 }} | xargs rm -rf
+  when: sebar_keep_releases > 0

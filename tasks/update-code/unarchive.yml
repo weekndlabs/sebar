@@ -1,0 +1,11 @@
+---
+- name: sebar | Unarchive | Unarchive source
+  unarchive:
+    copy: no
+    src: "{{ sebar_archived_file }}"
+    dest: "{{ sebar_release_path.stdout }}"
+
+- name: sebar | Unarchive | Delete archived file
+  file:
+    path: "{{ sebar_archived_file }}"
+    state: absent

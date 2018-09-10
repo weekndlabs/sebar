@@ -1,0 +1,15 @@
+---
+# Sends anonymous stats if the user is ok with it
+- name: sebar | Send anonymous stats
+  uri:
+    url: https://sebar.com/deploy
+    follow_redirects: all
+    method: POST
+    timeout: 5
+    body: "deploy_via={{ sebar_deploy_via | default('rsync') }}&version={{ ansible_version.string }}"
+    HEADER_Content-Type: "application/x-www-form-urlencoded"
+  when: sebar_allow_anonymous_stats
+  run_once: true
+  ignore_errors: yes
+  delegate_to: 127.0.0.1
+  become: false

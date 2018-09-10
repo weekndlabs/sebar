@@ -1,0 +1,83 @@
+---
+# Path where the code to deploy is
+sebar_deploy_from: "{{ playbook_dir }}"
+
+# Path where the code must be deployed to
+sebar_deploy_to: "/var/www/my-app"
+
+# Folder name for the releases
+sebar_version_dir: "releases"
+
+# Full path to the releases
+sebar_releases_path: "{{ sebar_deploy_to }}/{{ sebar_version_dir }}"
+
+# Full path to the shared path folder
+sebar_shared_path: "{{ sebar_deploy_to }}/shared"
+
+# Softlink name for the current release
+sebar_current_dir: "current"
+
+# Current directory deployment strategy
+sebar_current_via: "symlink"
+
+# Shared paths to symlink to release dir
+sebar_shared_paths: []
+
+# Shared files to symlink to release dir
+sebar_shared_files: []
+
+# Shared paths and basedir shared files creation
+sebar_ensure_shared_paths_exist: yes
+sebar_ensure_basedirs_shared_files_exist: yes
+
+# Number of releases to keep in your hosts, if 0, unlimited releases will be kept
+sebar_keep_releases: 0
+
+# Deployment strategies variables
+
+# Due to runtime variable evaluation, the sebar_deploy_via default is actually
+# defined in update-code.yml instead of this file. You can still override it in your
+# playbook as needed.
+# sebar_deploy_via: "rsync"
+
+# Directory name for the checked out repository
+sebar_repo_dir: "repo"
+
+## GIT pull strategy
+sebar_git_repo: git@github.com:USERNAME/REPO.git
+sebar_git_branch: master
+sebar_git_repo_tree: ""
+sebar_git_identity_key_path: ""
+sebar_git_identity_key_remote_path: ""
+
+## SVN pull strategy
+sebar_svn_repo: "https://svn.company.com/project"
+sebar_svn_branch: "trunk"
+sebar_svn_revision: "HEAD"
+sebar_svn_username: "user"
+sebar_svn_password: "Pa$$word"
+sebar_svn_environment: {}
+
+## HG pull strategy
+sebar_hg_repo: "https://USERNAME@bitbucket.org/USERNAME/REPO"
+sebar_hg_branch: "default"
+
+## RSYNC push strategy
+# sebar_rsync_extra_params: ""
+## put user@ for the remote paths. If you have a custom ssh config to define
+## the remote user for a host that does not match the inventory user,
+## you should set this parameter to "no".
+sebar_rsync_set_remote_user: yes
+
+## Download strategy
+sebar_get_url: https://github.com/someproject/somearchive.tar.gz
+
+## S3 get strategy
+sebar_s3_bucket: s3bucket
+sebar_s3_object: s3object.tgz
+sebar_s3_region: eu-west-1
+sebar_s3_rgw: false
+
+## Sends anonymous stats to the www.sebar.com servers
+## You can disallow it by just setting this parameter to "no" in your playbook
+sebar_allow_anonymous_stats: yes

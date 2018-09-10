@@ -1,0 +1,8 @@
+---
+- include: gcs.yml
+
+- name: sebar | gcs_unarchive | Set archived file
+  set_fact:
+    sebar_archived_file: "{{ sebar_release_path.stdout }}/{{ sebar_gcs_object | basename }}"
+
+- include: unarchive.yml

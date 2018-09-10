@@ -1,0 +1,18 @@
+---
+- name: sebar | HG | Update remote repository
+  hg:
+    repo: "{{ sebar_hg_repo }}"
+    dest: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}"
+    revision: "{{ sebar_hg_branch }}"
+    force: yes
+  register: sebar_hg_result
+
+- name: sebar | HG | Create release folder
+  file:
+    state: directory
+    path: "{{ sebar_release_path.stdout }}"
+
+- name: sebar | HG | Sync repo to release path
+  shell: "hg archive -r {{ sebar_hg_branch }} {{ sebar_release_path.stdout }}"
+  args:
+    chdir: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}/"

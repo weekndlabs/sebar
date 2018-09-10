@@ -1,0 +1,74 @@
+---
+- name: sebar | GIT | Ensure GIT deployment key is up to date (local key file)
+  copy:
+    src: "{{ sebar_git_identity_key_path }}"
+    dest: "{{ sebar_deploy_to }}/git_identity_key"
+    mode: 0400
+  when: sebar_git_identity_key_path|trim != ""
+
+- name: sebar | GIT | Ensure GIT deployment key is up to date (remote key file)
+  copy:
+    remote_src: true
+    src: "{{ sebar_git_identity_key_remote_path }}"
+    dest: "{{ sebar_deploy_to }}/git_identity_key"
+    mode: 0400
+  when: sebar_git_identity_key_remote_path|trim != ""
+
+- name: sebar | GIT | Update remote repository
+  git:
+    repo: "{{ sebar_git_repo }}"
+    dest: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}"
+    version: "{{ sebar_git_branch }}"
+    accept_hostkey: true
+    update: yes
+    force: yes
+    ssh_opts: "{{ sebar_git_ssh_opts | default(omit) }}"
+    refspec: "{{ sebar_git_refspec | default(omit) }}"
+    depth: "{{ sebar_git_depth | default(omit) }}"
+  register: sebar_git_result_update
+  when: sebar_git_identity_key_path|trim == '' and sebar_git_identity_key_remote_path|trim == ''
+
+- name: sebar | GIT | Update remote repository using SSH key
+  git:
+    repo: "{{ sebar_git_repo }}"
+    dest: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}"
+    version: "{{ sebar_git_branch }}"
+    accept_hostkey: true
+    update: yes
+    force: yes
+    ssh_opts: "{{ sebar_git_ssh_opts | default(omit) }}"
+    refspec: "{{ sebar_git_refspec | default(omit) }}"
+    depth: "{{ sebar_git_depth | default(omit) }}"
+    key_file: "{{ sebar_deploy_to }}/git_identity_key"
+  register: sebar_git_result_update_ssh
+  when: sebar_git_identity_key_path|trim != "" or sebar_git_identity_key_remote_path|trim != ""
+
+- name: sebar | GIT | Register sebar_git_result variable
+  set_fact: sebar_git_result={{ sebar_git_result_update_ssh if sebar_git_result_update is skipped else sebar_git_result_update }}
+
+- name: sebar | GIT | Shred GIT deployment key
+  command: shred -f "{{ sebar_deploy_to }}/git_identity_key"
+  when: sebar_git_identity_key_path|trim != "" or sebar_git_identity_key_remote_path|trim != ""
+
+- name: sebar | GIT | Set git_real_repo_tree
+  set_fact:
+    sebar_git_real_repo_tree: "{{ sebar_git_repo_tree | trim | regex_replace('^[/]*', '') | regex_replace('[/]*$', '') }}"
+
+- name: sebar | GIT | Create release folder
+  file:
+    state: directory
+    path: "{{ sebar_release_path.stdout }}"
+
+- name: sebar | GIT | Sync repo subtree["{{ sebar_git_real_repo_tree }}"] to release path
+  shell: >-
+           {
+             git ls-files -z --with-tree="{{ sebar_git_branch }}" | tr '\0' '\n';
+             git submodule foreach --recursive | sed -n -e "s/^Entering '\(.*\)'$/\1/p" | while read -r line; do (cd "$line"; git ls-files -z | tr "\0" "\n" | sed "s#^#$line/#"; cd $OLDPWD); done
+           }
+           | grep "^$prefix"
+           | sed "s#^$prefix/##"
+           | rsync -a --files-from=- "./$prefix/" {{ sebar_release_path.stdout }}/
+  args:
+    chdir: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}/"
+  environment:
+    prefix: "{{ sebar_git_real_repo_tree }}"

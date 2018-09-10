@@ -1,0 +1,16 @@
+---
+# We cannot create the symlinks unless these subfolders exist in the destination release folder
+- name: sebar | Ensure internal path foo exists
+  file:
+    state: directory
+    path: "{{ sebar_release_path.stdout }}/foo"
+
+- name: sebar | Ensure internal path xxx/yyy exists
+  file:
+    state: directory
+    path: "{{ sebar_release_path.stdout }}/xxx/yyy"
+
+- name: sebar | Ensure internal path files exists
+  file:
+    state: directory
+    path: "{{ sebar_release_path.stdout }}/files"

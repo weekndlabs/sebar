@@ -1,0 +1,31 @@
+---
+- name: sebar | SVN | Update remote repository
+  subversion:
+    repo: "{{ sebar_svn_repo }}/{{ sebar_svn_branch }}"
+    dest: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}"
+    revision: "{{ sebar_svn_revision }}"
+    username: "{{ sebar_svn_username }}"
+    password: "{{ sebar_svn_password }}"
+    force: yes
+  environment: "{{ sebar_svn_environment }}"
+  register: sebar_svn_result_update
+
+- name: sebar | SVN | Register sebar_svn_result variable
+  set_fact: sebar_svn_result={{ sebar_svn_result_update }}
+
+- name: sebar | SVN | Create release folder
+  file:
+    state: directory
+    path: "{{ sebar_release_path.stdout }}"
+
+- name: sebar | SVN | Copy repo to release path
+  subversion:
+    repo: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}"
+    dest: "{{ sebar_release_path.stdout }}"
+    revision: "{{ sebar_svn_revision }}"
+    username: "{{ sebar_svn_username }}"
+    password: "{{ sebar_svn_password }}"
+    export: yes
+    force: yes
+  environment: "{{ sebar_svn_environment }}"
+  register: sebar_svn_result_export

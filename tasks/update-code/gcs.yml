@@ -1,0 +1,15 @@
+---
+- name: sebar | GC storage | Create release folder
+  file:
+    state: directory
+    path: "{{ sebar_release_path.stdout }}"
+
+- name: sebar | GC storage | Get object from GC storage
+  gc_storage:
+    bucket: "{{ sebar_gcs_bucket }}"
+    object: "{{ sebar_gcs_object }}"
+    region: "{{ sebar_gcs_region }}"
+    gs_access_key: "{{ sebar_gcs_access_key | default(omit) }}"
+    gs_secret_key: "{{ sebar_gcs_secret_key | default(omit) }}"
+    dest: "{{ sebar_release_path.stdout }}/{{ sebar_gcs_object | basename }}"
+    mode: get
