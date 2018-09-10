@@ -369,58 +369,58 @@ PLAY [Deploy last wishes app to my server] ************************************
 GATHERING FACTS ***************************************************************
 ok: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Ensure deployment base path exists] ***
+TASK: [fajarhide.sebar-deploy | Ensure deployment base path exists] ***
 ok: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Ensure releases folder exists] ***
+TASK: [fajarhide.sebar-deploy | Ensure releases folder exists] ***
 ok: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Ensure shared elements folder exists] ***
+TASK: [fajarhide.sebar-deploy | Ensure shared elements folder exists] ***
 ok: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Get release timestamp] ***********
+TASK: [fajarhide.sebar-deploy | Get release timestamp] ***********
 changed: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Get release path] ****************
+TASK: [fajarhide.sebar-deploy | Get release path] ****************
 changed: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Get releases path] ***************
+TASK: [fajarhide.sebar-deploy | Get releases path] ***************
 changed: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Get shared path (in rsync case)] ***
+TASK: [fajarhide.sebar-deploy | Get shared path (in rsync case)] ***
 changed: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Rsync application files to remote shared copy (in rsync case)] ***
+TASK: [fajarhide.sebar-deploy | Rsync application files to remote shared copy (in rsync case)] ***
 changed: [quepimquepam.com -> 127.0.0.1]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Deploy existing code to servers] ***
+TASK: [fajarhide.sebar-deploy | Deploy existing code to servers] ***
 changed: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Deploy existing code to remote servers] ***
+TASK: [fajarhide.sebar-deploy | Deploy existing code to remote servers] ***
 skipping: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Update remote repository] ********
+TASK: [fajarhide.sebar-deploy | Update remote repository] ********
 skipping: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Export a copy of the repo] *******
+TASK: [fajarhide.sebar-deploy | Export a copy of the repo] *******
 skipping: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Deploy code from to servers] *****
+TASK: [fajarhide.sebar-deploy | Deploy code from to servers] *****
 skipping: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Copy release version into REVISION file] ***
+TASK: [fajarhide.sebar-deploy | Copy release version into REVISION file] ***
 changed: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Touches up the release code] *****
+TASK: [fajarhide.sebar-deploy | Touches up the release code] *****
 changed: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Change softlink to new release] ***
+TASK: [fajarhide.sebar-deploy | Change softlink to new release] ***
 changed: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Reload Apache] *******************
+TASK: [fajarhide.sebar-deploy | Reload Apache] *******************
 changed: [quepimquepam.com]
 
-TASK: [carlosbuenosvinos.sebar-deploy | Clean up releases] ***************
+TASK: [fajarhide.sebar-deploy | Clean up releases] ***************
 skipping: [quepimquepam.com]
 
 PLAY RECAP ********************************************************************
