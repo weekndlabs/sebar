@@ -2,7 +2,7 @@
 galaxy_info:
   author: sebar
   description: Ansible role to deploy scripting applications like PHP, Python, Ruby, etc. in a Capistrano style
-  company: sebar
+  company: SEBAR
   license: MIT
   min_ansible_version: 2.3
   platforms:
@@ -39,7 +39,7 @@ galaxy_info:
   - name: Debian
     versions:
     - all
-  categories:
+galaxy_tags:
   - cloud
   - web
   - deploy
