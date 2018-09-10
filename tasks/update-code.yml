@@ -1,25 +1,25 @@
 ---
 # Update code deployment step
-- name: sebar | Get release version
+- SEBAR | Get release version
   set_fact:
     sebar_release_version: "{{ lookup('pipe', 'date -u +%Y%m%d%H%M%SZ') }}"
   run_once: true
   when: sebar_release_version is not defined
   delegate_to: 127.0.0.1
 
-- name: sebar | Get release path
+- SEBAR | Get release path
   command: echo "{{ sebar_releases_path }}/{{ sebar_release_version }}"
   register: sebar_release_path
 
 - include: "update-code/{{ sebar_deploy_via | default('rsync') }}.yml"
 
-- name: sebar | Copy release version into REVISION file
+- SEBAR | Copy release version into REVISION file
   copy:
     content: "{{ sebar_release_version }}"
     dest: "{{ sebar_release_path.stdout }}/REVISION"
   when: sebar_git_result is not defined
 
-- name: sebar | Copy git released version into REVISION file
+- SEBAR | Copy git released version into REVISION file
   copy:
     content: "{{ sebar_git_result.after }}"
     dest: "{{ sebar_release_path.stdout }}/REVISION"

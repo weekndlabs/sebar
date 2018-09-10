@@ -1,6 +1,6 @@
 ---
 # Sends anonymous stats if the user is ok with it
-- name: sebar | Send anonymous stats
+- SEBAR | Send anonymous stats
   uri:
     url: https://sebar.com/deploy
     follow_redirects: all

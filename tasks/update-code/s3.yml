@@ -1,10 +1,10 @@
 ---
-- name: sebar | S3 | Create release folder
+- SEBAR | S3 | Create release folder
   file:
     state: directory
     path: "{{ sebar_release_path.stdout }}"
 
-- name: sebar | S3 | Get object from S3
+- SEBAR | S3 | Get object from S3
   s3:
     bucket: "{{ sebar_s3_bucket }}"
     object: "{{ sebar_s3_object }}"
@@ -16,7 +16,7 @@
     ignore_nonexistent_bucket: "{{ sebar_s3_ignore_nonexistent_bucket | default(omit) }}"
   when: not sebar_s3_rgw
 
-- name: sebar | S3 | Get object from Ceph RGW
+- SEBAR | S3 | Get object from Ceph RGW
   s3:
     rgw: true
     s3_url: "{{ sebar_s3_url }}"
