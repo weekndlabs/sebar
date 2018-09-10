@@ -32,5 +32,3 @@
 - include: cleanup.yml
 
 - include: "{{ sebar_after_cleanup_tasks_file | default('empty.yml') }}"
-
-- include: anon-stats.yml
