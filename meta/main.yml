@@ -44,6 +44,4 @@ galaxy_tags:
   - web
   - deploy
   - deployment
-dependencies:
-  - fajar.sebar
-  - fajar.kembali
+dependencies: []
