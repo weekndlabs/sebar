@@ -1,5 +1,5 @@
 ---
-- SEBAR | SVN | Update remote repository
+- name: SEBAR | SVN | Update remote repository
   subversion:
     repo: "{{ sebar_svn_repo }}/{{ sebar_svn_branch }}"
     dest: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}"
@@ -10,15 +10,15 @@
   environment: "{{ sebar_svn_environment }}"
   register: sebar_svn_result_update
 
-- SEBAR | SVN | Register sebar_svn_result variable
+- name: SEBAR | SVN | Register sebar_svn_result variable
   set_fact: sebar_svn_result={{ sebar_svn_result_update }}
 
-- SEBAR | SVN | Create release folder
+- name: SEBAR | SVN | Create release folder
   file:
     state: directory
     path: "{{ sebar_release_path.stdout }}"
 
-- SEBAR | SVN | Copy repo to release path
+- name: SEBAR | SVN | Copy repo to release path
   subversion:
     repo: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}"
     dest: "{{ sebar_release_path.stdout }}"

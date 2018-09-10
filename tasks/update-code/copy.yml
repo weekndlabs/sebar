@@ -1,10 +1,10 @@
 ---
-- SEBAR | SCP | Create release folder
+- name: SEBAR | SCP | Create release folder
   file:
     state: directory
     path: "{{ sebar_release_path.stdout }}"
 
-- SEBAR | SCP | Deploy existing code to remote servers
+- name: SEBAR | SCP | Deploy existing code to remote servers
   copy:
     src: "{{ sebar_deploy_from }}"
     dest: "{{ sebar_release_path.stdout }}"

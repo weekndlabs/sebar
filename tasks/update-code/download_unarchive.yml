@@ -1,7 +1,7 @@
 ---
 - include: download.yml
 
-- SEBAR | download_unarchive | Set archived file
+- name: SEBAR | download_unarchive | Set archived file
   set_fact:
     sebar_archived_file: "{{ sebar_release_path.stdout }}/{{ sebar_get_url | basename }}"
 

@@ -1,12 +1,12 @@
 ---
-- SEBAR | GIT | Ensure GIT deployment key is up to date (local key file)
+- name: SEBAR | GIT | Ensure GIT deployment key is up to date (local key file)
   copy:
     src: "{{ sebar_git_identity_key_path }}"
     dest: "{{ sebar_deploy_to }}/git_identity_key"
     mode: 0400
   when: sebar_git_identity_key_path|trim != ""
 
-- SEBAR | GIT | Ensure GIT deployment key is up to date (remote key file)
+- name: SEBAR | GIT | Ensure GIT deployment key is up to date (remote key file)
   copy:
     remote_src: true
     src: "{{ sebar_git_identity_key_remote_path }}"
@@ -14,7 +14,7 @@
     mode: 0400
   when: sebar_git_identity_key_remote_path|trim != ""
 
-- SEBAR | GIT | Update remote repository
+- name: SEBAR | GIT | Update remote repository
   git:
     repo: "{{ sebar_git_repo }}"
     dest: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}"
@@ -28,7 +28,7 @@
   register: sebar_git_result_update
   when: sebar_git_identity_key_path|trim == '' and sebar_git_identity_key_remote_path|trim == ''
 
-- SEBAR | GIT | Update remote repository using SSH key
+- name: SEBAR | GIT | Update remote repository using SSH key
   git:
     repo: "{{ sebar_git_repo }}"
     dest: "{{ sebar_deploy_to }}/{{ sebar_repo_dir }}"
@@ -43,23 +43,23 @@
   register: sebar_git_result_update_ssh
   when: sebar_git_identity_key_path|trim != "" or sebar_git_identity_key_remote_path|trim != ""
 
-- SEBAR | GIT | Register sebar_git_result variable
+- name: SEBAR | GIT | Register sebar_git_result variable
   set_fact: sebar_git_result={{ sebar_git_result_update_ssh if sebar_git_result_update is skipped else sebar_git_result_update }}
 
-- SEBAR | GIT | Shred GIT deployment key
+- name: SEBAR | GIT | Shred GIT deployment key
   command: shred -f "{{ sebar_deploy_to }}/git_identity_key"
   when: sebar_git_identity_key_path|trim != "" or sebar_git_identity_key_remote_path|trim != ""
 
-- SEBAR | GIT | Set git_real_repo_tree
+- name: SEBAR | GIT | Set git_real_repo_tree
   set_fact:
     sebar_git_real_repo_tree: "{{ sebar_git_repo_tree | trim | regex_replace('^[/]*', '') | regex_replace('[/]*$', '') }}"
 
-- SEBAR | GIT | Create release folder
+- name: SEBAR | GIT | Create release folder
   file:
     state: directory
     path: "{{ sebar_release_path.stdout }}"
 
-- SEBAR | GIT | Sync repo subtree["{{ sebar_git_real_repo_tree }}"] to release path
+- name: SEBAR | GIT | Sync repo subtree["{{ sebar_git_real_repo_tree }}"] to release path
   shell: >-
            {
              git ls-files -z --with-tree="{{ sebar_git_branch }}" | tr '\0' '\n';

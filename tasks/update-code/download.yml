@@ -1,11 +1,11 @@
 ---
-- SEBAR | download | Create release folder
+- name: SEBAR | download | Create release folder
   file:
     state: directory
     path: "{{ sebar_release_path.stdout }}"
 
 # We should be able to remove default(omit) filters and add defaults once we deprecate Ansible 1.9
-- SEBAR | download | Download artifact
+- name: SEBAR | download | Download artifact
   get_url:
     url: "{{ sebar_get_url }}"
     dest: "{{ sebar_release_path.stdout }}/{{ sebar_get_url | basename }}"

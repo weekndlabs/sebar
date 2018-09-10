@@ -5,23 +5,23 @@
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
   register: stat_current_dir
 
-- SEBAR | Remove current folder if it's a symlink
+- name: SEBAR | Remove current folder if it's a symlink
   file:
     state: absent
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
   when: stat_current_dir.stat.islnk is defined and stat_current_dir.stat.islnk
 
 # Perform rsync deployment
-- SEBAR | Ensure current folder is a directory
+- name: SEBAR | Ensure current folder is a directory
   file:
     state: directory
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
 
-- SEBAR | Sync release to new current path
+- name: SEBAR | Sync release to new current path
   command: rsync -a -F --no-times --delete-after "{{ sebar_release_path.stdout }}/" "{{ sebar_deploy_to }}/{{ sebar_current_dir }}/"
 
 # Ensure symlinks target paths is absent
-- SEBAR | Ensure shared paths targets are absent
+- name: SEBAR | Ensure shared paths targets are absent
   file:
     state: absent
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}/{{ item }}"
@@ -30,7 +30,7 @@
     - "{{ sebar_shared_files }}"
 
 # Symlinks shared paths
-- SEBAR | Create softlinks for shared paths
+- name: SEBAR | Create softlinks for shared paths
   file:
     state: link
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}/{{ item }}"
