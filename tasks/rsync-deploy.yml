@@ -1,18 +1,18 @@
 ---
 
-# Migration check from symlink deployment
+# Cek migrasi rilis symlink
 - stat:
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
   register: stat_current_dir
 
-- name: SEBAR | Remove current folder if it's a symlink
+- name: SEBAR | Hapus folder saat ini jika symlink
   file:
     state: absent
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
   when: stat_current_dir.stat.islnk is defined and stat_current_dir.stat.islnk
 
-# Perform rsync deployment
-- name: SEBAR | Ensure current folder is a directory
+# Melakukan tugas rsync
+- name: SEBAR | Memastikan folder saat ini adalah directory
   file:
     state: directory
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
@@ -20,8 +20,8 @@
 - name: SEBAR | Sync release to new current path
   command: rsync -a -F --no-times --delete-after "{{ sebar_release_path.stdout }}/" "{{ sebar_deploy_to }}/{{ sebar_current_dir }}/"
 
-# Ensure symlinks target paths is absent
-- name: SEBAR | Ensure shared paths targets are absent
+# Memastikan symlink tidak ada
+- name: SEBAR | Memastikan folder shared belum terbuat
   file:
     state: absent
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}/{{ item }}"
@@ -30,7 +30,7 @@
     - "{{ sebar_shared_files }}"
 
 # Symlinks shared paths
-- name: SEBAR | Create softlinks for shared paths
+- name: SEBAR | Membuat softlink untuk path saat ini
   file:
     state: link
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}/{{ item }}"

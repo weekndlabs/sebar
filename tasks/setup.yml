@@ -1,30 +1,30 @@
 ---
-# Setup folders
-- name: SEBAR | Ensure deployment base path exists
+# Membuat folder
+- name: SEBAR | Memastikan path rilis tersedia
   file:
     state: directory
     path: "{{ sebar_deploy_to }}"
 
-- name: SEBAR | Ensure releases folder exists
+- name: SEBAR | Memastikan folder rilis ada
   file:
     state: directory
     path: "{{ sebar_releases_path }}"
 
-- name: SEBAR | Ensure shared elements folder exists
+- name: SEBAR | Memastikan folder shared element ada
   file:
     state: directory
     path: "{{ sebar_shared_path }}"
 
-# Ensure shared path exists
-- name: SEBAR | Ensure shared paths exists
+# Memastikan path shared tersedia
+- name: SEBAR | Memastikan path shared tersedia
   file:
     state: directory
     path: "{{ sebar_shared_path }}/{{ item }}"
   with_items: "{{ sebar_shared_paths }}"
   when: sebar_ensure_shared_paths_exist
 
-# Ensure basedir shared files exists
-- name: SEBAR | Ensure basedir shared files exists
+# Memastikan basedir file untuk shared ada
+- name: SEBAR | Memastikan basedir file untuk shared ada
   file:
     state: directory
     path: "{{ sebar_shared_path }}/{{ item | dirname }}"

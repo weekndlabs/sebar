@@ -77,7 +77,3 @@ sebar_s3_bucket: s3bucket
 sebar_s3_object: s3object.tgz
 sebar_s3_region: eu-west-1
 sebar_s3_rgw: false
-
-## Sends anonymous stats to the www.sebar.com servers
-## You can disallow it by just setting this parameter to "no" in your playbook
-sebar_allow_anonymous_stats: yes

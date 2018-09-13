@@ -1,19 +1,19 @@
 ---
-# Update code deployment step
-- name: SEBAR | Get release version
+# Update step rilis kode
+- name: SEBAR | Mendapatkan versi rilis
   set_fact:
-    sebar_release_version: "{{ lookup('pipe', 'date -u +%Y%m%d%H%M%SZ') }}"
+    sebar_release_version: "{{ lookup('pipe', 'date -u +%Y%m%d%H%M%SFJ') }}"
   run_once: true
-  when: sebar_release_version is not defined
+  when: sebar_release_version tidak teridentidikasi
   delegate_to: 127.0.0.1
 
-- name: SEBAR | Get release path
+- name: SEBAR | Mendapatkan path rilis
   command: echo "{{ sebar_releases_path }}/{{ sebar_release_version }}"
   register: sebar_release_path
 
 - include: "update-code/{{ sebar_deploy_via | default('rsync') }}.yml"
 
-- name: SEBAR | Copy release version into REVISION file
+- name: SEBAR | Copy versi rilis didalam file REVISION
   copy:
     content: "{{ sebar_release_version }}"
     dest: "{{ sebar_release_path.stdout }}/REVISION"

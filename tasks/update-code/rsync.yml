@@ -1,9 +1,9 @@
 ---
-- name: SEBAR | RSYNC | Get shared path (in rsync case)
+- name: SEBAR | RSYNC | Menggunakan default tools
   command: echo "{{ sebar_shared_path }}/.shared-copy"
   register: sebar_shared_rsync_copy_path
 
-- name: SEBAR | RSYNC | Rsync application files to remote shared copy
+- name: SEBAR | RSYNC | Rsync metode yang digunakan untuk sinkronisasi data antar server.
   synchronize:
     src: "{{ sebar_deploy_from }}"
     dest: "{{ sebar_shared_rsync_copy_path.stdout }}"
@@ -16,5 +16,5 @@
     rsync_opts: "{{ sebar_rsync_extra_params | default(omit) }}"
     rsync_path: "{{ sebar_rsync_path | default(omit) }}"
 
-- name: SEBAR | RSYNC | Deploy existing code to servers
+- name: SEBAR | RSYNC | Menerapkan kode yang dibuat ke server
   command: cp -a {{ sebar_shared_rsync_copy_path.stdout }} {{ sebar_release_path.stdout }}
