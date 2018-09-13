@@ -1,7 +1,7 @@
 Sebar
 ==========
 
-**sebar ((deploy))** merupakan peran yang dapat dengan mudah mengelola proses rilis version untuk aplikasi scripting seperti Nodejs, Golang, PHP, Python dan Ruby dll.
+**sebar ((deploy))** merupakan ansible role untuk mempermudah mengelola proses rilis version untuk aplikasi scripting seperti Nodejs, Golang, PHP, Python dan Ruby dll.
 
 Installation
 ------------
