@@ -17,7 +17,7 @@
     state: directory
     path: "{{ sebar_deploy_to }}/{{ sebar_current_dir }}"
 
-- name: SEBAR | Sync release to new current path
+- name: SEBAR | Menghubungakn rilis ke path saat ini
   command: rsync -a -F --no-times --delete-after "{{ sebar_release_path.stdout }}/" "{{ sebar_deploy_to }}/{{ sebar_current_dir }}/"
 
 # Memastikan symlink tidak ada

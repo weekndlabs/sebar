@@ -1,8 +1,6 @@
 ---
 # Ensure symlinks target paths is absent
-# This was removed in 1.7.3 to improve speed but it introduced regressions in cases where
-# there are .gitkeep files in such folders (common practice in some PHP frameworks)
-- name: SEBAR | Ensure shared paths targets are absent
+- name: SEBAR | Memastikan shared path tujuan tidak ditemukan
   file:
     state: absent
     path: "{{ sebar_release_path.stdout }}/{{ item }}"
@@ -11,7 +9,7 @@
     - "{{ sebar_shared_files }}"
 
 # Symlinks shared paths and files
-- name: SEBAR | Create softlinks for shared paths and files
+- name: SEBAR | Membuat softlinks untuk path folder shared dan files
   file:
     state: link
     path: "{{ sebar_release_path.stdout }}/{{ item }}"
@@ -21,14 +19,14 @@
     - "{{ sebar_shared_files }}"
 
 # Remove previous .rsync-filter file (rsync current deployment)
-- name: SEBAR | Ensure .rsync-filter is absent
+- name: SEBAR | Memastikan .rsync-filter tidak ditemukan
   file:
     state: absent
     path: "{{ sebar_release_path.stdout }}/.rsync-filter"
   when: sebar_current_via == "rsync"
 
 # Setup .rsync-filter file for current rsync deployment (exclude shared folders for rsync current deployment)
-- name: SEBAR | Setup .rsync-filter with shared-folders
+- name: SEBAR | Memasang .rsync-filter dengan shared-folders
   lineinfile:
     dest: "{{ sebar_release_path.stdout }}/.rsync-filter"
     line: "- /{{ item }}"
