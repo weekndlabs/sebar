@@ -2,7 +2,7 @@
 # Update step rilis kode
 - name: SEBAR | Mendapatkan versi rilis
   set_fact:
-    sebar_release_version: "{{ lookup('pipe', 'date -u +%Y%m%d%H%M%SFJ') }}"
+    sebar_release_version: "{{ lookup('pipe', 'date -u +%Y%m%d%H%M%SZ') }}"
   run_once: true
   when: sebar_release_version tidak teridentidikasi
   delegate_to: 127.0.0.1
