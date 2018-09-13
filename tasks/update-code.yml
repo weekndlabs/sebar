@@ -4,7 +4,7 @@
   set_fact:
     sebar_release_version: "{{ lookup('pipe', 'date -u +%Y%m%d%H%M%SZ') }}"
   run_once: true
-  when: sebar_release_version tidak teridentidikasi
+  when: sebar_release_version is not defined
   delegate_to: 127.0.0.1
 
 - name: SEBAR | Mendapatkan path rilis
@@ -19,7 +19,7 @@
     dest: "{{ sebar_release_path.stdout }}/REVISION"
   when: sebar_git_result is not defined
 
-- name: SEBAR | Copy git released version into REVISION file
+- name: SEBAR | Mengcopy git rilis kedalam REVISION
   copy:
     content: "{{ sebar_git_result.after }}"
     dest: "{{ sebar_release_path.stdout }}/REVISION"
